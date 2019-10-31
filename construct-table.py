@@ -74,11 +74,11 @@ def construct_table(grid):
 
 def main():
     grid = [
-        ["space", "lol", "brah"],
-        ["space", "lol", "C# is awesome"],
-        ["space", "lol", "brah"],
-        ["lmaofsdfs", "lol", "brah"],
-        ["space", "lol", "brah"],
+        ["apple", "pineapple", "orange"],
+        ["pear", "grape", "plum"],
+        ["nectarine", "tangerine", "kiwi"],
+        ["lime", "lemon", "celery"],
+        ["spinach", "tomato", "grapefruit"],
     ]
 
     table = construct_table(grid)
