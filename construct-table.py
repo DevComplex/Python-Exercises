@@ -1,7 +1,7 @@
 VERY_SMALL_INTEGER = -(2 ** 32)
 
-def get_columns_max_word_sizes(grid, rows, cols):
-    columns_max_word_sizes = []
+def get_max_word_size_of_each_col(grid, rows, cols):
+    cols_max_word_sizes = []
 
     for i in range(rows):
         max_word_size = VERY_SMALL_INTEGER
@@ -12,36 +12,32 @@ def get_columns_max_word_sizes(grid, rows, cols):
             if word_size > max_word_size:
                 max_word_size = word_size
 
-        columns_max_word_sizes.append(max_word_size)
+        cols_max_word_sizes.append(max_word_size)
 
-    return columns_max_word_sizes
+    return cols_max_word_sizes
 
-def get_column_widths(grid, rows, cols):
-    columns_max_word_sizes = get_columns_max_word_sizes(grid, rows, cols)
-    return [x + 2 for x in columns_max_word_sizes]
+def get_cols_widths(grid, rows, cols):
+    cols_max_word_sizes = get_max_word_size_of_each_col(grid, rows, cols)
+    return [x + 2 for x in cols_max_word_sizes]
 
-def get_left_and_right_spaces(column_widths, col, word_len):
-    space = column_widths[col] - word_len
-    space_on_each_side = space // 2
-
-    left_space = space_on_each_side
-    right_space = space_on_each_side
+def get_left_and_right_spaces_of_word(cols_widths, col, word_len):
+    space = cols_widths[col] - word_len
+    left_space = right_space = space // 2
 
     if space % 2 == 1:
         left_space += 1
 
     return (left_space, right_space)
 
-
-def get_row_str(grid, col, column_widths):
+def get_table_row_str(grid, col, cols_widths):
     rows = len(grid)
-    row_str = ""
+    table_row_str = ""
 
     for row in range(0, rows):
             column_str = ""
             word = grid[row][col]
 
-            left_space, right_space = get_left_and_right_spaces(column_widths, row, len(word))
+            left_space, right_space = get_left_and_right_spaces_of_word(cols_widths, row, len(word))
 
             # always add a left wall
             column_str += "|"
@@ -52,25 +48,24 @@ def get_row_str(grid, col, column_widths):
             if row == rows - 1:
                 column_str += "|"
 
-            row_str += column_str
+            table_row_str += column_str
 
-    return row_str
+    return table_row_str
 
 def construct_table(grid):
     rows = len(grid)
     cols = len(grid[0])
 
-    column_widths = get_column_widths(grid, rows, cols)
-    table_width = sum(column_widths) + len(column_widths) + 1 
+    cols_widths = get_cols_widths(grid, rows, cols)
+    table_width = sum(cols_widths) + len(cols_widths) + 1
 
     table = ["-" * table_width]
 
     for col in range(0, cols):
-        table.append(get_row_str(grid, col, column_widths))
+        table.append(get_table_row_str(grid, col, cols_widths))
         table.append("-" * table_width)
 
     return "\n".join(table)
-
 
 def main():
     grid = [
