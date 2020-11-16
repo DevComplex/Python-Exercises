@@ -7,8 +7,6 @@ def evaluate(S):
         elif ch != "#":
             s.append(ch)
 
-    print(s)
-
     return "".join(s)
 
 def backspace_compare(S, T):
